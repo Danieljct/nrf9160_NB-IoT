@@ -1,0 +1,42 @@
+nrf_modem_lib_init()
+lte_lc_system_mode_set(LTE_LC_SYSTEM_MODE_NBIOT, LTE_LC_SYSTEM_MODE_PREFER_NBIOT);
+lte_lc_init();
+lte_lc_normal();
+
+
+Comandos at:
+AT+CFUN?: 1 para prendido (full funcionality), 0 para "apagado"
+se debe apagar para realizar algunas configuraciones
+
+
+AT%COPS=?:
+Da las señales disponibles: <stat(abajo)>, "operador", "operador", operador numerico (73001 entel, 73003 claro), banda (7 para LTE-M, 9 para NB-IoT)
+
+AT+COPS? 
+0 unknown
+1 Operator avaliable
+2 Current operator
+3 Operator forbbiden
+
+
+AT+CSQ:
++CSQ: (0-31,99),(0-7,99)
+
+El primer elemento es la RSSI (Received signal strength indicator), 31 es el mejor, 0 el peor
+99 es not known o not detectable
+El segundo es Bit Error Rate (BER), si no se está llamando va a ser 99.
+
+AT+CEREG?:
++CREG: <n>,<stat>
+n es configuración, 0 es no registrado a resultados de red no solicitados, 1 es registrado
+stat:
+	0 no registrado y no está buscando
+	1 registrado, internet domestico
+	2 no registrado pero buscando un nuevo operador
+	3 registro denegado
+	4 desconocido
+	5 registrado, roaming
+
+AT+QNWINFO
+indica el nombre y numero de operador y banda a la que está conectado
+
